@@ -1,0 +1,1598 @@
+<!DOCTYPE html>
+<html lang="es-CL">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Alerta Regulatoria · Entidad fiscalizada por la CMF</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Zilla+Slab:wght@500;600;700&family=Public+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --tinta:#101E28;
+  --tinta-2:#1B303D;
+  --papel:#E9EDEF;
+  --superficie:#FFFFFF;
+  --linea:#C4D0D6;
+  --linea-suave:#DCE4E8;
+  --texto:#14232C;
+  --texto-suave:#56707E;
+  --acento:#1A4E7A;
+  --alta:#A4211B;
+  --media:#9A6608;
+  --baja:#2C6A55;
+  --vencido:#6B1410;
+  --display:"Zilla Slab", Georgia, "Times New Roman", serif;
+  --cuerpo:"Public Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+  --dato:"IBM Plex Mono", ui-monospace, "SF Mono", Consolas, monospace;
+  --r:3px;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  background:var(--papel);
+  color:var(--texto);
+  font-family:var(--cuerpo);
+  font-size:15px;
+  line-height:1.5;
+  -webkit-font-smoothing:antialiased;
+}
+:focus-visible{outline:2px solid var(--acento);outline-offset:2px}
+button{font:inherit;color:inherit;cursor:pointer}
+
+.envoltorio{max-width:1240px;margin:0 auto;padding:0 20px 64px}
+
+/* ---------- Encabezado ---------- */
+.cabecera{background:var(--tinta);color:#EAF0F3;margin-bottom:0}
+.cabecera .envoltorio{padding-top:22px;padding-bottom:22px}
+.cabecera-fila{display:flex;flex-wrap:wrap;gap:18px;align-items:flex-end;justify-content:space-between}
+.marca-eyebrow{
+  font-family:var(--dato);font-size:11px;letter-spacing:.16em;text-transform:uppercase;
+  color:#7FA3B5;margin-bottom:6px;
+}
+h1{
+  font-family:var(--display);font-weight:700;font-size:31px;line-height:1.1;
+  margin:0;letter-spacing:-.01em;
+}
+.subtitulo{color:#9FBDCC;font-size:13.5px;margin-top:5px}
+.sello{
+  font-family:var(--dato);font-size:11px;line-height:1.7;color:#9FBDCC;text-align:right;
+  border-left:1px solid #33505F;padding-left:16px;
+}
+.sello strong{color:#EAF0F3;font-weight:500}
+
+/* ---------- Aviso datos de ejemplo ---------- */
+.aviso{
+  background:#FBF3D8;border-bottom:1px solid #E0CE96;color:#5B4708;
+}
+.aviso .envoltorio{padding-top:9px;padding-bottom:9px;font-size:12.5px;display:flex;gap:10px;align-items:baseline}
+.aviso b{font-family:var(--dato);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;white-space:nowrap}
+
+/* ---------- Regla de plazos (elemento distintivo) ---------- */
+.regla-bloque{background:var(--tinta-2);color:#DCE7EC;padding:22px 0 16px}
+.regla-encabezado{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:20px;gap:16px;flex-wrap:wrap}
+.eyebrow{
+  font-family:var(--dato);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:#7FA3B5;
+}
+.regla-leyenda{font-family:var(--dato);font-size:10.5px;color:#7FA3B5;display:flex;gap:14px;flex-wrap:wrap}
+.regla-leyenda span{display:flex;align-items:center;gap:5px}
+.punto{width:8px;height:8px;transform:rotate(45deg);display:inline-block}
+.regla{position:relative;height:74px;margin-bottom:4px}
+.pista{position:absolute;left:0;right:0;top:52px;height:1px;background:#4A6878}
+.hoy{position:absolute;top:6px;bottom:14px;width:1px;background:#8FD0C8}
+.hoy::after{
+  content:"HOY";position:absolute;bottom:-14px;left:-11px;font-family:var(--dato);
+  font-size:9.5px;letter-spacing:.1em;color:#8FD0C8;
+}
+.hito{position:absolute;top:44px;height:9px;width:1px;background:#4A6878}
+.hito span{position:absolute;top:14px;left:50%;transform:translateX(-50%);font-family:var(--dato);font-size:9.5px;color:#6D8C9C;white-space:nowrap}
+.marca{
+  position:absolute;width:11px;height:11px;transform:translateX(-50%) rotate(45deg);
+  border:0;padding:0;border-radius:1px;transition:transform .12s ease;
+}
+.marca:hover,.marca:focus-visible{transform:translateX(-50%) rotate(45deg) scale(1.45);z-index:3}
+.marca[data-sel="1"]{box-shadow:0 0 0 3px #DCE7EC}
+.regla-pie{font-family:var(--dato);font-size:10.5px;color:#6D8C9C;border-top:1px solid #33505F;padding-top:9px}
+
+/* ---------- Indicadores ---------- */
+.indicadores{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--linea);border:1px solid var(--linea);margin-top:26px}
+.indicador{background:var(--superficie);padding:14px 16px}
+.indicador .cifra{font-family:var(--display);font-size:30px;font-weight:600;line-height:1;letter-spacing:-.02em}
+.indicador .rotulo{font-family:var(--dato);font-size:10px;letter-spacing:.11em;text-transform:uppercase;color:var(--texto-suave);margin-top:7px}
+.indicador.critico .cifra{color:var(--alta)}
+.indicador.vencido .cifra{color:var(--vencido)}
+
+/* ---------- Filtros ---------- */
+.filtros{border:1px solid var(--linea);border-top:0;background:var(--superficie);padding:16px}
+.filtro-fila{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:10px}
+.filtro-fila:last-child{margin-bottom:0}
+.filtro-rotulo{
+  font-family:var(--dato);font-size:10px;letter-spacing:.11em;text-transform:uppercase;
+  color:var(--texto-suave);width:74px;flex:none;
+}
+.chip{
+  border:1px solid var(--linea);background:#F4F7F8;border-radius:var(--r);
+  padding:4px 11px;font-size:12.5px;color:var(--texto-suave);
+}
+.chip:hover{border-color:var(--acento);color:var(--acento)}
+.chip[aria-pressed="true"]{background:var(--tinta);border-color:var(--tinta);color:#fff}
+.buscador{flex:1;min-width:190px;display:flex;border:1px solid var(--linea);border-radius:var(--r)}
+.buscador input{
+  flex:1;border:0;padding:7px 11px;font:inherit;font-size:13.5px;background:transparent;color:var(--texto);
+  border-radius:var(--r);
+}
+.buscador input:focus{outline:none}
+.buscador:focus-within{border-color:var(--acento);box-shadow:0 0 0 2px rgba(26,78,122,.14)}
+.acciones{display:flex;gap:8px;margin-left:auto}
+.boton{
+  border:1px solid var(--linea);background:var(--superficie);border-radius:var(--r);
+  padding:6px 13px;font-size:12.5px;color:var(--texto-suave);
+}
+.boton:hover{border-color:var(--acento);color:var(--acento)}
+
+/* ---------- Cuerpo ---------- */
+.cuerpo{display:grid;grid-template-columns:minmax(0,1fr) 372px;gap:20px;margin-top:20px;align-items:start}
+.recuento{font-family:var(--dato);font-size:11px;letter-spacing:.06em;color:var(--texto-suave);margin-bottom:9px;display:flex;justify-content:space-between;gap:12px}
+.orden{display:flex;gap:6px}
+.orden button{background:none;border:0;padding:0 2px;font-family:var(--dato);font-size:11px;color:var(--texto-suave);border-bottom:1px solid transparent}
+.orden button[aria-pressed="true"]{color:var(--acento);border-bottom-color:var(--acento)}
+
+.lista{list-style:none;margin:0;padding:0;border:1px solid var(--linea);background:var(--superficie)}
+.lista li+li{border-top:1px solid var(--linea-suave)}
+.fila{
+  width:100%;text-align:left;background:none;border:0;padding:13px 16px 13px 13px;
+  display:grid;grid-template-columns:4px minmax(0,1fr) 92px;gap:13px;align-items:start;
+}
+.fila:hover{background:#F3F7F9}
+.fila[aria-current="true"]{background:#EDF3F7}
+.barra{width:4px;align-self:stretch;min-height:44px;border-radius:1px}
+.fila-meta{font-family:var(--dato);font-size:10.5px;letter-spacing:.06em;color:var(--texto-suave);text-transform:uppercase;margin-bottom:4px;display:flex;gap:8px;flex-wrap:wrap}
+.fila-meta .emisor{color:var(--tinta);font-weight:600}
+.fila-titulo{font-size:14.5px;line-height:1.35;font-weight:600;letter-spacing:-.005em}
+.fila-inst{font-size:12.5px;color:var(--texto-suave);margin-top:3px}
+.fila-extracto{
+  font-size:12.5px;line-height:1.45;color:var(--texto-suave);margin-top:7px;
+  padding-left:9px;border-left:2px solid var(--linea-suave);
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;
+}
+.fila-fecha{font-family:var(--dato)}
+.estimada{color:var(--media)}
+.fila-plazo{text-align:right;font-family:var(--dato)}
+.cuenta{font-size:17px;font-weight:600;line-height:1.1;letter-spacing:-.01em}
+.cuenta-rot{font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--texto-suave);margin-top:3px}
+.vacio{padding:34px 16px;text-align:center;color:var(--texto-suave);font-size:13.5px}
+
+/* ---------- Detalle ---------- */
+.detalle{border:1px solid var(--linea);background:var(--superficie);position:sticky;top:18px}
+.detalle-cabecera{padding:15px 17px;border-bottom:1px solid var(--linea);border-left:5px solid var(--linea)}
+.detalle-folio{font-family:var(--dato);font-size:10.5px;letter-spacing:.11em;text-transform:uppercase;color:var(--texto-suave)}
+.detalle-titulo{font-family:var(--display);font-size:19px;font-weight:600;line-height:1.22;margin:7px 0 0;letter-spacing:-.01em}
+.detalle-cuerpo{padding:5px 17px 17px}
+.campo{padding:11px 0;border-bottom:1px solid var(--linea-suave)}
+.campo:last-child{border-bottom:0}
+.campo dt{font-family:var(--dato);font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--texto-suave)}
+.campo dd{margin:5px 0 0;font-size:13.5px;line-height:1.45}
+.campo dd.extracto{
+  font-size:13px;line-height:1.55;color:var(--texto);
+  background:#F4F7F8;border-left:3px solid var(--acento);padding:10px 12px;margin-top:7px;
+}
+.etiquetas{display:flex;flex-wrap:wrap;gap:5px;margin-top:2px}
+.etiqueta{border:1px solid var(--linea);border-radius:var(--r);padding:2px 8px;font-size:11.5px;color:var(--texto-suave)}
+.marcador{display:inline-flex;align-items:center;gap:6px;font-weight:600;font-size:13px}
+.marcador::before{content:"";width:8px;height:8px;transform:rotate(45deg)}
+.detalle-vacio{padding:38px 20px;color:var(--texto-suave);font-size:13.5px;text-align:center}
+.detalle-vacio .eyebrow{margin-bottom:9px}
+
+/* ---------- Pie ---------- */
+.pie{margin-top:30px;border-top:1px solid var(--linea);padding-top:14px;font-size:12px;color:var(--texto-suave);display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.pie code{font-family:var(--dato);font-size:11.5px;background:#DFE6E9;padding:1px 5px;border-radius:var(--r)}
+
+/* ---------- Adaptación ---------- */
+@media (max-width:940px){
+  .cuerpo{grid-template-columns:minmax(0,1fr)}
+  .detalle{position:static;order:-1}
+  .indicadores{grid-template-columns:repeat(2,1fr)}
+  h1{font-size:25px}
+  .sello{text-align:left;border-left:0;padding-left:0;border-top:1px solid #33505F;padding-top:10px;width:100%}
+  .fila{grid-template-columns:4px minmax(0,1fr);}
+  .fila-plazo{grid-column:2;text-align:left;display:flex;gap:7px;align-items:baseline;margin-top:6px}
+  .cuenta-rot{margin-top:0}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+@media print{
+  body{background:#fff}
+  .filtros,.acciones,.regla-bloque,.aviso,.orden{display:none}
+  .cuerpo{grid-template-columns:1fr}
+  .detalle{display:none}
+  .lista li{break-inside:avoid}
+  .cabecera{background:#fff;color:#000;border-bottom:2px solid #000}
+  .cabecera h1,.subtitulo,.sello,.marca-eyebrow{color:#000}
+}
+
+.enlace-boton{
+  display:inline-flex;align-items:center;gap:7px;text-decoration:none;
+  border:1px solid var(--acento);border-radius:var(--r);
+  padding:8px 13px;font-size:13px;font-weight:600;color:var(--acento);background:#F2F7FA;
+  margin-top:2px;
+}
+.enlace-boton:hover{background:var(--acento);color:#fff}
+.enlace-boton .flecha{font-family:var(--dato);font-size:13px}
+.enlace-nota{display:block;font-size:11.5px;color:var(--texto-suave);margin-top:7px;line-height:1.4}
+.fila-enlace{
+  font-family:var(--dato);font-size:11px;color:var(--acento);text-decoration:none;
+  border-bottom:1px solid transparent;
+}
+.fila-enlace:hover{border-bottom-color:var(--acento)}
+@media print{ .enlace-boton{border:0;background:none;padding:0} }
+
+
+/* ---------- Botón de sincronización ---------- */
+.sync-fila{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.sync-fila > span:not(.insignia){flex:1;min-width:230px}
+.boton-sync{
+  border:0;border-radius:var(--r);background:var(--tinta);color:#fff;
+  padding:9px 17px;font-size:13.5px;font-weight:600;white-space:nowrap;
+  display:inline-flex;align-items:center;gap:8px;
+}
+.boton-sync:hover{background:var(--acento)}
+.boton-sync[disabled]{background:#7A8F9B;cursor:progress}
+.boton-sync .giro{display:inline-block;font-family:var(--dato)}
+.boton-sync[data-corriendo="1"] .giro{animation:girar 1.1s linear infinite}
+@keyframes girar{to{transform:rotate(360deg)}}
+@media (prefers-reduced-motion:reduce){.boton-sync[data-corriendo="1"] .giro{animation:none}}
+
+.capa{
+  position:fixed;inset:0;background:rgba(16,30,40,.55);z-index:50;
+  display:flex;align-items:center;justify-content:center;padding:20px;
+}
+.modal{
+  background:var(--superficie);border-radius:5px;max-width:620px;width:100%;
+  max-height:88vh;overflow:auto;box-shadow:0 18px 50px rgba(16,30,40,.3);
+}
+.modal-cab{padding:19px 22px 15px;border-bottom:1px solid var(--linea)}
+.modal-cab h3{font-family:var(--display);font-size:20px;font-weight:600;margin:0;letter-spacing:-.01em}
+.modal-cab p{margin:7px 0 0;font-size:13.5px;color:var(--texto-suave);line-height:1.5}
+.modal-cuerpo{padding:18px 22px}
+.modal-pie{padding:14px 22px 18px;display:flex;gap:9px;justify-content:flex-end;border-top:1px solid var(--linea-suave)}
+.paso{display:grid;grid-template-columns:26px 1fr;gap:13px;padding:11px 0;border-bottom:1px solid var(--linea-suave)}
+.paso:last-child{border-bottom:0}
+.paso-num{
+  font-family:var(--dato);font-size:12px;font-weight:600;color:#fff;background:var(--tinta);
+  width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+}
+.paso b{display:block;font-size:14px;margin-bottom:3px}
+.paso span{font-size:13px;color:var(--texto-suave);line-height:1.5}
+.paso code{font-family:var(--dato);font-size:12.5px;background:#E7EDF0;padding:2px 6px;border-radius:var(--r)}
+.registro{
+  font-family:var(--dato);font-size:11.5px;line-height:1.65;white-space:pre-wrap;
+  background:#12212E;color:#CFE0E8;padding:14px 16px;border-radius:var(--r);
+  max-height:290px;overflow:auto;margin:0;
+}
+/* ---------- Estado de sincronización ---------- */
+.aviso.ok{background:#E7F1EC;border-bottom-color:#B6D3C5;color:#255045}
+.aviso.atrasada{background:#FBF3D8;border-bottom-color:#E0CE96;color:#5B4708}
+.aviso.detenida{background:#F8E4E2;border-bottom-color:#E3B4B0;color:#6B1410}
+
+/* ---------- Módulo legislativo ---------- */
+.legis{margin-top:38px;border-top:3px solid var(--tinta);padding-top:18px}
+.legis-cabecera{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap;margin-bottom:6px}
+.legis-cabecera h2{font-family:var(--display);font-size:23px;font-weight:600;margin:0;letter-spacing:-.01em}
+.legis-sub{font-size:13px;color:var(--texto-suave);margin-top:4px;max-width:62ch}
+.legis-filtros{display:flex;flex-wrap:wrap;gap:8px;margin:15px 0 12px;align-items:center}
+.legis-tabla{border:1px solid var(--linea);background:var(--superficie)}
+.legis-fila{border-bottom:1px solid var(--linea-suave)}
+.legis-fila:last-child{border-bottom:0}
+.legis-btn{
+  width:100%;text-align:left;background:none;border:0;padding:12px 15px 12px 12px;
+  display:grid;grid-template-columns:4px 96px minmax(0,1fr) auto;gap:12px;align-items:start;
+}
+.legis-btn:hover{background:#F3F7F9}
+.legis-fila[data-abierta="1"] .legis-btn{background:#EDF3F7}
+.boletin{font-family:var(--dato);font-size:12.5px;font-weight:500;color:var(--acento);padding-top:1px}
+.legis-titulo{font-size:14px;line-height:1.35;font-weight:600;letter-spacing:-.005em}
+.legis-meta{font-family:var(--dato);font-size:10.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--texto-suave);margin-top:5px;display:flex;gap:9px;flex-wrap:wrap}
+.insignia{
+  font-family:var(--dato);font-size:9.5px;letter-spacing:.09em;text-transform:uppercase;
+  border:1px solid var(--linea);border-radius:var(--r);padding:2px 7px;white-space:nowrap;align-self:start;
+}
+.insignia.urg{border-color:#C98A2E;color:#8A5B0B;background:#FBF3E2}
+.insignia.urg-di{border-color:#C0524B;color:#8C1F19;background:#FAECEA}
+.legis-detalle{padding:2px 15px 16px 58px;border-top:1px solid var(--linea-suave);background:#FAFCFD}
+.legis-detalle dl{margin:0}
+.legis-detalle .campo{padding:10px 0}
+@media (max-width:940px){
+  .legis-btn{grid-template-columns:4px minmax(0,1fr);}
+  .boletin{grid-column:2}
+  .legis-btn .insignia{grid-column:2;justify-self:start}
+  .legis-detalle{padding-left:16px}
+}
+@media print{ .legis-filtros{display:none} .legis-detalle{display:block!important} }
+</style>
+</head>
+<body>
+
+<header class="cabecera">
+  <div class="envoltorio cabecera-fila">
+    <div>
+      <div class="marca-eyebrow">Monitoreo normativo y legislativo continuo · Chile</div>
+      <h1>Alerta Regulatoria</h1>
+      <div class="subtitulo">Operador de remesas y pagos transfronterizos · Perímetro UAF, Banco Central, CMF (Ley Fintec) y SERNAC</div>
+    </div>
+    <div class="sello">
+      Sincronización <strong>diaria</strong><br>
+      Datos actualizados <strong id="sello-fecha">—</strong><br>
+      En seguimiento <strong id="sello-total">—</strong>
+    </div>
+  </div>
+</header>
+
+<div class="aviso" id="barra-sync">
+  <div class="envoltorio sync-fila">
+    <b id="sync-etiqueta">Sincronización</b>
+    <span id="sync-texto">—</span>
+    <button class="boton-sync" id="btn-sync"><span class="giro">&#8635;</span> Sincronizar ahora</button>
+  </div>
+</div>
+
+<section class="regla-bloque" aria-label="Regla de plazos">
+  <div class="envoltorio">
+    <div class="regla-encabezado">
+      <div class="eyebrow">Regla de plazos · exposición por vencimiento</div>
+      <div class="regla-leyenda">
+        <span><i class="punto" style="background:#D4544D"></i> Alta</span>
+        <span><i class="punto" style="background:#D9A03C"></i> Media</span>
+        <span><i class="punto" style="background:#5E9E85"></i> Baja</span>
+      </div>
+    </div>
+    <div class="regla" id="regla"></div>
+    <div class="regla-pie" id="regla-pie">—</div>
+  </div>
+</section>
+
+<main class="envoltorio">
+
+  <section class="indicadores" aria-label="Indicadores">
+    <div class="indicador vencido"><div class="cifra" id="kpi-vencidos">0</div><div class="rotulo">Plazos vencidos</div></div>
+    <div class="indicador critico"><div class="cifra" id="kpi-criticas">0</div><div class="rotulo">Criticidad alta</div></div>
+    <div class="indicador"><div class="cifra" id="kpi-30">0</div><div class="rotulo">Vencen en 30 días</div></div>
+    <div class="indicador"><div class="cifra" id="kpi-consulta">0</div><div class="rotulo">En consulta pública</div></div>
+  </section>
+
+  <section class="filtros" aria-label="Filtros">
+    <div class="filtro-fila">
+      <span class="filtro-rotulo">Emisor</span>
+      <div id="chips-emisor" style="display:flex;flex-wrap:wrap;gap:8px"></div>
+    </div>
+    <div class="filtro-fila">
+      <span class="filtro-rotulo">Criticidad</span>
+      <div id="chips-criticidad" style="display:flex;flex-wrap:wrap;gap:8px"></div>
+    </div>
+    <div class="filtro-fila">
+      <span class="filtro-rotulo">Estado</span>
+      <div id="chips-estado" style="display:flex;flex-wrap:wrap;gap:8px"></div>
+    </div>
+    <div class="filtro-fila">
+      <span class="filtro-rotulo">Buscar</span>
+      <div class="buscador">
+        <label for="q" class="sr-only" style="position:absolute;left:-9999px">Buscar en las alertas</label>
+        <input id="q" type="search" placeholder="Materia, instrumento, área impactada, responsable…" autocomplete="off">
+      </div>
+      <div class="acciones">
+        <button class="boton" id="btn-limpiar">Limpiar filtros</button>
+        <button class="boton" id="btn-csv">Descargar CSV</button>
+        <button class="boton" id="btn-imprimir">Imprimir</button>
+      </div>
+    </div>
+  </section>
+
+  <div class="cuerpo">
+    <section aria-label="Alertas">
+      <div class="recuento">
+        <span id="recuento">—</span>
+        <span class="orden">
+          Ordenar:
+          <button data-orden="urgencia" aria-pressed="true">urgencia</button>
+          <button data-orden="criticidad" aria-pressed="false">criticidad</button>
+          <button data-orden="publicacion" aria-pressed="false">publicación</button>
+        </span>
+      </div>
+      <ul class="lista" id="lista"></ul>
+    </section>
+
+    <aside class="detalle" id="detalle" aria-live="polite">
+      <div class="detalle-vacio">
+        <div class="eyebrow">Ficha de la alerta</div>
+        Selecciona una alerta de la lista o una marca de la regla de plazos para ver la ficha completa.
+      </div>
+    </aside>
+  </div>
+
+  <section class="legis" aria-label="Seguimiento legislativo">
+    <div class="legis-cabecera">
+      <div>
+        <div class="eyebrow" style="color:var(--texto-suave)">Congreso Nacional · Cámara de Diputados y Senado</div>
+        <h2>Proyectos de ley en seguimiento</h2>
+        <div class="legis-sub">Boletines en tramitación que pueden alterar la operación de remesas y pagos transfronterizos: prevención de lavado de activos, datos personales, medios de pago, ciberseguridad y protección al consumidor financiero.</div>
+      </div>
+      <div class="recuento" style="margin:0"><span id="legis-recuento">—</span></div>
+    </div>
+
+    <div class="legis-filtros">
+      <span class="filtro-rotulo">Impacto</span>
+      <div id="chips-impacto" style="display:flex;gap:8px;flex-wrap:wrap"></div>
+      <span class="filtro-rotulo" style="margin-left:8px">Cámara</span>
+      <div id="chips-camara" style="display:flex;gap:8px;flex-wrap:wrap"></div>
+      <div class="acciones">
+        <button class="boton" id="btn-legis-csv">Descargar CSV</button>
+      </div>
+    </div>
+
+    <div class="legis-tabla" id="legis-tabla"></div>
+  </section>
+
+  <footer class="pie">
+    <span>Fuentes a verificar en cada ciclo: CMF (normativa y consultas públicas), UAF, Banco Central de Chile, SERNAC, Diario Oficial y tramitación legislativa.</span>
+    <span>Editar contenido: bloque <code>ALERTAS</code> en el código fuente.</span>
+  </footer>
+</main>
+
+<script>
+/* =========================================================================
+   PANEL DE ALERTA REGULATORIA — entidad fiscalizada por la CMF
+   =========================================================================
+   Para actualizar el panel solo se edita el arreglo ALERTAS (más abajo).
+   Campos de cada alerta:
+
+   folio        Identificador interno de seguimiento. Texto libre.
+   emisor       CMF | UAF | BCCh | SERNAC | Hacienda | Congreso  (o el que definas)
+   instrumento  Tipo y numeración del acto: NCG, Circular, Oficio Circular,
+                Capítulo RAN, proyecto de ley, ley publicada.
+   titulo       Materia de la alerta, en una línea.
+   extracto     Resumen ejecutivo de la norma: qué exige, a quién y desde cuándo.
+                Tres a cinco líneas. Es el campo que se lee antes de abrir el
+                texto oficial, así que debe bastar por sí solo.
+   perimetro    'monitoreo' cuando la norma se dirige a otro tipo de entidad y se
+                sigue solo por efecto indirecto. Si se omite, se asume que aplica.
+   estado       "En consulta pública" | "Publicada" | "Vigente" |
+                "En tramitación" | "Vigencia gradual"
+   criticidad   "alta" | "media" | "baja"
+   publicacion  Fecha del acto en formato AAAA-MM-DD. Si la norma aún no se
+                publica, se registra la fecha esperada y se marca abajo.
+   publicacionEstimada
+                true cuando la fecha anterior es proyectada y no oficial.
+   plazo        Fecha límite de cumplimiento AAAA-MM-DD, o null si no hay plazo.
+   plazoNota    Qué vence en esa fecha (comentarios, adecuación, primer reporte).
+   impacto      Arreglo de áreas afectadas.
+   accion       Acción interna comprometida.
+   responsable  Área o cargo a cargo del seguimiento.
+   referencia   Dónde verificar el texto oficial (texto libre, respaldo).
+   enlace       URL a la publicación oficial. Se muestra como botón en la ficha
+                y como enlace rápido en la fila.
+   enlaceNombre Qué es lo que se abre, para que el lector sepa qué esperar.
+   enlaceTipo   'documento' si apunta al texto mismo; 'listado' si apunta a la
+                sección del regulador donde hay que ubicarlo.
+   ========================================================================= */
+
+const HOY = new Date(); HOY.setHours(0,0,0,0);
+
+const COLOR = {
+  alta:  {barra:'#A4211B', marca:'#D4544D', texto:'#A4211B', rotulo:'Alta'},
+  media: {barra:'#9A6608', marca:'#D9A03C', texto:'#9A6608', rotulo:'Media'},
+  baja:  {barra:'#2C6A55', marca:'#5E9E85', texto:'#2C6A55', rotulo:'Baja'}
+};
+const PESO = {alta:0, media:1, baja:2};
+
+const fmt = new Intl.DateTimeFormat('es-CL',{day:'2-digit',month:'short',year:'numeric'});
+const fechaLarga = new Intl.DateTimeFormat('es-CL',{day:'numeric',month:'long',year:'numeric'});
+
+function aFecha(s){ if(!s) return null; const p = s.split('-').map(Number); return new Date(p[0],p[1]-1,p[2]); }
+function dias(a){ if(!a) return null; return Math.round((a - HOY)/86400000); }
+function textoFecha(s){ const d = aFecha(s); return d ? fmt.format(d).replace('.','') : '—'; }
+
+/* ---------- Estado de la interfaz ---------- */
+const filtros = {emisor:new Set(), criticidad:new Set(), estado:new Set(), q:'', orden:'urgencia'};
+let seleccion = null;
+
+/* ---------- Preparación de datos ---------- */
+function preparar(){
+  return ALERTAS.map((a,i)=>{
+    const d = dias(aFecha(a.plazo));
+    return Object.assign({}, a, {_i:i, _dias:d});
+  });
+}
+
+function filtrar(datos){
+  const q = filtros.q.trim().toLowerCase();
+  return datos.filter(a=>{
+    if(filtros.emisor.size && !filtros.emisor.has(a.emisor)) return false;
+    if(filtros.criticidad.size && !filtros.criticidad.has(a.criticidad)) return false;
+    if(filtros.estado.size && !filtros.estado.has(a.estado)) return false;
+    if(q){
+      const bolsa = [a.folio,a.emisor,a.instrumento,a.titulo,a.extracto,a.estado,a.accion,a.responsable,a.plazoNota,(a.impacto||[]).join(' ')].join(' ').toLowerCase();
+      if(!bolsa.includes(q)) return false;
+    }
+    return true;
+  });
+}
+
+function ordenar(datos){
+  const copia = datos.slice();
+  if(filtros.orden === 'urgencia'){
+    copia.sort((x,y)=>{
+      const dx = x._dias === null ? 99999 : x._dias;
+      const dy = y._dias === null ? 99999 : y._dias;
+      return dx - dy || PESO[x.criticidad] - PESO[y.criticidad];
+    });
+  } else if(filtros.orden === 'criticidad'){
+    copia.sort((x,y)=>{
+      const dx = x._dias === null ? 99999 : x._dias;
+      const dy = y._dias === null ? 99999 : y._dias;
+      return PESO[x.criticidad] - PESO[y.criticidad] || dx - dy;
+    });
+  } else {
+    copia.sort((x,y)=> (y.publicacion||'').localeCompare(x.publicacion||''));
+  }
+  return copia;
+}
+
+/* ---------- Indicadores ---------- */
+function pintarIndicadores(datos){
+  const vencidos = datos.filter(a=>a._dias !== null && a._dias < 0).length;
+  const criticas = datos.filter(a=>a.criticidad === 'alta').length;
+  const treinta  = datos.filter(a=>a._dias !== null && a._dias >= 0 && a._dias <= 30).length;
+  const consulta = datos.filter(a=>a.estado === 'En consulta pública').length;
+  document.getElementById('kpi-vencidos').textContent = vencidos;
+  document.getElementById('kpi-criticas').textContent = criticas;
+  document.getElementById('kpi-30').textContent = treinta;
+  document.getElementById('kpi-consulta').textContent = consulta;
+}
+
+/* ---------- Regla de plazos ---------- */
+const R_MIN = -90, R_MAX = 270;
+function posicion(d){
+  const c = Math.max(R_MIN, Math.min(R_MAX, d));
+  return ((c - R_MIN)/(R_MAX - R_MIN))*100;
+}
+
+function pintarRegla(datos){
+  const regla = document.getElementById('regla');
+  regla.innerHTML = '';
+
+  const pista = document.createElement('div'); pista.className = 'pista'; regla.appendChild(pista);
+
+  [-60,-30,30,90,180,270].forEach(d=>{
+    const h = document.createElement('div'); h.className='hito';
+    h.style.left = posicion(d)+'%';
+    const s = document.createElement('span');
+    s.textContent = (d>0?'+':'') + d + ' d';
+    h.appendChild(s); regla.appendChild(h);
+  });
+
+  const hoy = document.createElement('div'); hoy.className='hoy'; hoy.style.left = posicion(0)+'%';
+  regla.appendChild(hoy);
+
+  const conPlazo = datos.filter(a=>a._dias !== null).sort((x,y)=>x._dias - y._dias);
+  const carriles = [];
+  conPlazo.forEach(a=>{
+    const p = posicion(a._dias);
+    let carril = 0;
+    while(carriles[carril] !== undefined && p - carriles[carril] < 2.6) carril++;
+    carriles[carril] = p;
+    const b = document.createElement('button');
+    b.className = 'marca';
+    b.style.left = p+'%';
+    b.style.top = (44 - carril*13) + 'px';
+    b.style.background = COLOR[a.criticidad].marca;
+    if(a._dias < 0) b.style.boxShadow = 'inset 0 0 0 2px #2A0C0A';
+    b.dataset.i = a._i;
+    if(seleccion === a._i) b.dataset.sel = '1';
+    b.setAttribute('aria-label', a.folio + ': ' + a.titulo + ' — ' + rotuloPlazo(a._dias));
+    b.title = a.emisor + ' · ' + a.titulo + '\n' + rotuloPlazo(a._dias) + ' (' + textoFecha(a.plazo) + ')';
+    b.addEventListener('click', ()=>{ seleccionar(a._i); });
+    regla.appendChild(b);
+  });
+
+  const sinPlazo = datos.length - conPlazo.length;
+  const prox = conPlazo.find(a=>a._dias >= 0);
+  const pie = [];
+  pie.push(conPlazo.length + ' alertas con plazo cierto');
+  if(sinPlazo) pie.push(sinPlazo + ' en seguimiento sin plazo definido');
+  if(prox) pie.push('Próximo vencimiento: ' + prox.folio + ' · ' + textoFecha(prox.plazo));
+  document.getElementById('regla-pie').textContent = pie.join('  ·  ');
+}
+
+function rotuloPlazo(d){
+  if(d === null) return 'Sin plazo definido';
+  if(d < 0) return 'Vencido hace ' + Math.abs(d) + ' días';
+  if(d === 0) return 'Vence hoy';
+  if(d === 1) return 'Vence mañana';
+  return 'Vence en ' + d + ' días';
+}
+
+/* ---------- Lista ---------- */
+function pintarLista(datos){
+  const ul = document.getElementById('lista');
+  ul.innerHTML = '';
+  if(!datos.length){
+    const li = document.createElement('li');
+    li.innerHTML = '<div class="vacio">Ningún registro coincide con los filtros aplicados. Ajusta la selección o limpia los filtros.</div>';
+    ul.appendChild(li);
+    return;
+  }
+  datos.forEach(a=>{
+    const li = document.createElement('li');
+    const b = document.createElement('button');
+    b.className = 'fila';
+    b.setAttribute('aria-current', seleccion === a._i ? 'true' : 'false');
+    const c = COLOR[a.criticidad];
+    const vencido = a._dias !== null && a._dias < 0;
+    const colorCuenta = vencido ? 'var(--vencido)' : (a._dias !== null && a._dias <= 30 ? c.texto : 'var(--texto)');
+    const cuenta = a._dias === null ? '—' : (a._dias < 0 ? Math.abs(a._dias) : a._dias);
+    const rot = a._dias === null ? 'sin plazo' : (a._dias < 0 ? 'días vencido' : 'días');
+
+    b.innerHTML =
+      '<span class="barra" style="background:'+c.barra+'"></span>' +
+      '<span>' +
+        '<span class="fila-meta">' +
+          '<span class="emisor">'+esc(a.emisor)+'</span>' +
+          '<span>'+esc(a.estado)+'</span>' +
+          '<span>Criticidad '+c.rotulo.toLowerCase()+'</span>' +
+          '<span class="fila-fecha'+(a.publicacionEstimada?' estimada':'')+'">'+
+            (a.publicacionEstimada?'Publicación estimada ':'Publicada ')+textoFecha(a.publicacion)+
+          '</span>' +
+          '<span>'+esc(a.folio)+'</span>' +
+          (a.perimetro==='monitoreo' ? '<span class="estimada">Monitoreo sectorial</span>' : '') +
+          (a.enlace ? '<a class="fila-enlace" href="'+esc(a.enlace)+'" target="_blank" rel="noopener" onclick="event.stopPropagation()">Leer &#8599;</a>' : '') +
+        '</span>' +
+        '<span class="fila-titulo">'+esc(a.titulo)+'</span>' +
+        '<span class="fila-inst">'+esc(a.instrumento)+'</span>' +
+        (a.extracto ? '<span class="fila-extracto">'+esc(a.extracto)+'</span>' : '') +
+      '</span>' +
+      '<span class="fila-plazo"><span class="cuenta" style="color:'+colorCuenta+'">'+cuenta+'</span><span class="cuenta-rot">'+rot+'</span></span>';
+
+    b.addEventListener('click', ()=>seleccionar(a._i));
+    li.appendChild(b); ul.appendChild(li);
+  });
+}
+
+/* ---------- Ficha de detalle ---------- */
+function pintarDetalle(){
+  const cont = document.getElementById('detalle');
+  if(seleccion === null){
+    cont.innerHTML = '<div class="detalle-vacio"><div class="eyebrow">Ficha de la alerta</div>Selecciona una alerta de la lista o una marca de la regla de plazos para ver la ficha completa.</div>';
+    return;
+  }
+  const a = ALERTAS[seleccion];
+  const d = dias(aFecha(a.plazo));
+  const c = COLOR[a.criticidad];
+  const etiquetas = (a.impacto||[]).map(x=>'<span class="etiqueta">'+esc(x)+'</span>').join('');
+
+  cont.innerHTML =
+    '<div class="detalle-cabecera" style="border-left-color:'+c.barra+'">' +
+      '<div class="detalle-folio">'+esc(a.folio)+' · '+esc(a.emisor)+'</div>' +
+      '<h2 class="detalle-titulo">'+esc(a.titulo)+'</h2>' +
+    '</div>' +
+    '<dl class="detalle-cuerpo">' +
+      campo('Instrumento', esc(a.instrumento)) +
+      (a.extracto ? '<div class="campo"><dt>Extracto</dt><dd class="extracto">'+esc(a.extracto)+'</dd></div>' : '') +
+      campo('Estado', esc(a.estado)) +
+      campo('Perímetro', a.perimetro==='monitoreo'
+            ? '<span style="color:var(--media)">Monitoreo sectorial</span> · dirigida a entidades bancarias fiscalizadas por la CMF; no obliga directamente a la entidad, se sigue por efecto indirecto y por criterio del supervisor.'
+            : 'Aplica directamente a la entidad.') +
+      campo('Criticidad', '<span class="marcador" style="color:'+c.texto+'"><span style="background:'+c.barra+'"></span>'+c.rotulo+'</span>') +
+      campo(a.publicacionEstimada ? 'Publicación estimada' : 'Fecha de publicación',
+            '<strong'+(a.publicacionEstimada?' class="estimada"':'')+'>'+textoFecha(a.publicacion)+'</strong>' +
+            (a.publicacionEstimada ? '<br><span style="color:var(--texto-suave);font-size:12.5px">Fecha proyectada: confirmar al publicarse en el Diario Oficial o en el sitio del regulador.</span>' : '')) +
+      campo('Plazo', a.plazo
+          ? '<strong style="color:'+(d<0?'var(--vencido)':c.texto)+'">'+rotuloPlazo(d)+'</strong><br>'+textoFecha(a.plazo)+(a.plazoNota?' · '+esc(a.plazoNota):'')
+          : 'Sin plazo definido'+(a.plazoNota?' · '+esc(a.plazoNota):'')) +
+      campo('Áreas impactadas', '<div class="etiquetas">'+etiquetas+'</div>') +
+      campo('Acción requerida', esc(a.accion)) +
+      campo('Responsable del seguimiento', esc(a.responsable)) +
+      campo('Texto oficial', a.enlace
+        ? '<a class="enlace-boton" href="'+esc(a.enlace)+'" target="_blank" rel="noopener">Abrir publicación <span class="flecha">&#8599;</span></a>' +
+          '<span class="enlace-nota">' + esc(a.enlaceNombre) +
+          (a.enlaceTipo === 'listado'
+            ? ' — sección oficial del regulador. Ubica el instrumento por número o fecha de emisión; al confirmarlo, pega aquí el enlace directo al documento y cambia enlaceTipo a "documento".'
+            : ' — enlace directo al documento.') + '</span>'
+        : esc(a.referencia)) +
+    '</dl>';
+}
+function campo(t,v){ return '<div class="campo"><dt>'+t+'</dt><dd>'+v+'</dd></div>'; }
+function esc(s){ return String(s==null?'':s).replace(/[&<>"]/g, m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m])); }
+
+/* ---------- Filtros: construcción de chips ---------- */
+function chips(contenedorId, clave, valores, etiquetas){
+  const cont = document.getElementById(contenedorId);
+  cont.innerHTML = '';
+  valores.forEach(v=>{
+    const b = document.createElement('button');
+    b.className = 'chip';
+    b.textContent = etiquetas ? etiquetas[v] : v;
+    b.setAttribute('aria-pressed', filtros[clave].has(v) ? 'true':'false');
+    b.addEventListener('click', ()=>{
+      filtros[clave].has(v) ? filtros[clave].delete(v) : filtros[clave].add(v);
+      b.setAttribute('aria-pressed', filtros[clave].has(v) ? 'true':'false');
+      render();
+    });
+    cont.appendChild(b);
+  });
+}
+
+function seleccionar(i){ seleccion = i; render(); }
+
+/* ---------- CSV ---------- */
+function csv(datos){
+  const cab = ['Folio','Emisor','Instrumento','Materia','Extracto','Estado','Criticidad','Publicación','Publicación estimada','Plazo','Días restantes','Nota del plazo','Áreas impactadas','Acción requerida','Responsable','Verificación','Enlace oficial'];
+  const q = s => '"' + String(s==null?'':s).replace(/"/g,'""') + '"';
+  const filas = datos.map(a=>[
+    a.folio,a.emisor,a.instrumento,a.titulo,a.extracto||'',a.estado,COLOR[a.criticidad].rotulo,
+    a.publicacion||'',a.publicacionEstimada?'Sí':'No',a.plazo||'',a._dias===null?'':a._dias,a.plazoNota||'',
+    (a.impacto||[]).join(' / '),a.accion,a.responsable,a.referencia,a.enlace||''
+  ].map(q).join(';'));
+  return '\uFEFF' + [cab.map(q).join(';')].concat(filas).join('\r\n');
+}
+
+/* ---------- Render ---------- */
+function render(){
+  const base = preparar();
+  const vista = ordenar(filtrar(base));
+  pintarIndicadores(vista);
+  pintarRegla(vista);
+  pintarLista(vista);
+  pintarDetalle();
+  document.getElementById('recuento').textContent =
+    vista.length + ' de ' + base.length + ' alertas en pantalla';
+  document.getElementById('sello-total').textContent = base.length;
+  window._vista = vista;
+}
+
+/* ---------- Puesta en marcha ---------- */
+function iniciar(){
+  document.getElementById('sello-fecha').textContent = fechaLarga.format(HOY);
+
+  const emisores = [...new Set(ALERTAS.map(a=>a.emisor))];
+  const estados  = [...new Set(ALERTAS.map(a=>a.estado))];
+  chips('chips-emisor','emisor',emisores);
+  chips('chips-criticidad','criticidad',['alta','media','baja'],{alta:'Alta',media:'Media',baja:'Baja'});
+  chips('chips-estado','estado',estados);
+
+  document.getElementById('q').addEventListener('input', e=>{ filtros.q = e.target.value; render(); });
+
+  document.querySelectorAll('.orden button').forEach(b=>{
+    b.addEventListener('click', ()=>{
+      filtros.orden = b.dataset.orden;
+      document.querySelectorAll('.orden button').forEach(x=>x.setAttribute('aria-pressed', x===b ? 'true':'false'));
+      render();
+    });
+  });
+
+  document.getElementById('btn-limpiar').addEventListener('click', ()=>{
+    filtros.emisor.clear(); filtros.criticidad.clear(); filtros.estado.clear();
+    filtros.q=''; document.getElementById('q').value='';
+    seleccion = null;
+    chips('chips-emisor','emisor',emisores);
+    chips('chips-criticidad','criticidad',['alta','media','baja'],{alta:'Alta',media:'Media',baja:'Baja'});
+    chips('chips-estado','estado',estados);
+    render();
+  });
+
+  document.getElementById('btn-csv').addEventListener('click', ()=>{
+    const blob = new Blob([csv(window._vista||[])], {type:'text/csv;charset=utf-8;'});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'alerta-regulatoria-' + HOY.toISOString().slice(0,10) + '.csv';
+    a.click(); URL.revokeObjectURL(url);
+  });
+
+  document.getElementById('btn-imprimir').addEventListener('click', ()=>window.print());
+
+  render();
+}
+
+/* =========================================================================
+   BLOQUE ALERTAS — contenido editable
+   Ejemplos representativos para una entidad fiscalizada por la CMF.
+   Verificar toda cita normativa en la fuente oficial antes de usar.
+   ========================================================================= */
+const ALERTAS = [
+  {
+    folio:'REG-2026-014',
+    enlace:'https://www.cmfchile.cl/institucional/legislacion_normativa/normativa_tramite.php',
+    enlaceNombre:'Normativa en consulta de la CMF',
+    enlaceTipo:'listado',
+    perimetro:'monitoreo',
+    emisor:'CMF',
+    instrumento:'Norma de Carácter General en consulta — gestión de riesgo operacional y continuidad del negocio',
+    titulo:'Nuevos estándares de gestión del riesgo operacional y continuidad operacional',
+    extracto:'Eleva el estándar de gestión del riesgo operacional: exige taxonomía única de eventos, base de datos de pérdidas operacionales con umbral de registro, y pruebas periódicas de continuidad con escenarios severos pero plausibles. Radica en el directorio la aprobación anual del marco y del apetito de riesgo operacional. Incorpora obligación de informar al supervisor los eventos que superen el umbral definido.',
+    estado:'En consulta pública',
+    criticidad:'alta',
+    publicacion:'2026-09-30',
+    publicacionEstimada:true,
+    plazo:'2026-08-21',
+    plazoNota:'Cierre de comentarios a la consulta pública',
+    impacto:['Riesgo operacional','Continuidad del negocio','Tecnología','Directorio'],
+    accion:'Preparar comentarios institucionales y estimar brecha frente al marco interno vigente.',
+    responsable:'Gerencia de Riesgo Operacional / Fiscalía',
+    referencia:'Sección de normativa en consulta del sitio de la CMF'
+  },
+  {
+    folio:'REG-2026-013',
+    enlace:'https://www.cmfchile.cl/institucional/legislacion_normativa/normativa2.php?ultima=mes',
+    enlaceNombre:'Normativa CMF del último mes',
+    enlaceTipo:'listado',
+    perimetro:'monitoreo',
+    emisor:'CMF',
+    instrumento:'Recopilación Actualizada de Normas — modificación de capítulo sobre gestión y solvencia',
+    titulo:'Ajustes al proceso de evaluación de gestión y solvencia y a su reporte al supervisor',
+    extracto:'Modifica los criterios con que el supervisor evalúa la calidad de la gestión y la solvencia, ampliando la información que la entidad debe autoevaluar y remitir. Incorpora nuevas materias al informe de autoevaluación, entre ellas la efectividad del gobierno de riesgos y la trazabilidad de las decisiones del directorio. Redefine el formato y la periodicidad de la reportería asociada.',
+    estado:'Publicada',
+    criticidad:'alta',
+    publicacion:'2026-06-30',
+    plazo:'2026-09-30',
+    plazoNota:'Primer reporte bajo el nuevo formato',
+    impacto:['Gestión de riesgos','Planificación de capital','Reportes regulatorios'],
+    accion:'Actualizar manual de gestión de riesgos y ajustar el calendario de reportería interna.',
+    responsable:'Gerencia de Riesgos / Planificación Financiera',
+    referencia:'Normativa bancaria publicada por la CMF'
+  },
+  {
+    folio:'REG-2026-011',
+    enlace:'https://www.cmfchile.cl/institucional/legislacion_normativa/normativa.php',
+    enlaceNombre:'Buscador de normativa CMF',
+    enlaceTipo:'listado',
+    emisor:'CMF',
+    instrumento:'Normativa de implementación de la Ley 21.521 (Fintec) — Sistema de Finanzas Abiertas',
+    titulo:'Obligaciones de intercambio de información en el Sistema de Finanzas Abiertas',
+    extracto:'Regula la calidad de proveedor de información y los deberes de la entidad al poner datos de clientes a disposición de terceros autorizados, previo consentimiento expreso, específico y revocable. Fija estándares de interfaz, disponibilidad del servicio y trazabilidad de cada solicitud. La entrada en vigencia opera por fases sucesivas, con hitos de habilitación técnica antes de cada una.',
+    estado:'Vigencia gradual',
+    criticidad:'alta',
+    publicacion:'2026-03-18',
+    plazo:'2026-10-15',
+    plazoNota:'Hito de habilitación técnica de la fase en curso',
+    impacto:['Tecnología','Datos personales','Productos','Cumplimiento'],
+    accion:'Verificar avance del plan de implementación por fases y documentar evidencia de cumplimiento.',
+    responsable:'Gerencia de Transformación Digital / Cumplimiento',
+    referencia:'Normativa Ley Fintec en el sitio de la CMF'
+  },
+
+  {
+    folio:'UAF-2026-021',
+    enlace:'https://www.uaf.cl/es-cl/normativa/circulares-uaf',
+    enlaceNombre:'Circulares vigentes UAF',
+    enlaceTipo:'listado',
+    emisor:'UAF',
+    instrumento:'Circular sobre prevención de lavado de activos y financiamiento del terrorismo',
+    titulo:'Debida diligencia reforzada, personas expuestas políticamente y beneficiario final',
+    extracto:'Precisa cuándo procede la debida diligencia reforzada y qué medidas adicionales deben aplicarse a personas expuestas políticamente, sus vínculos cercanos y estructuras societarias complejas. Exige identificar al beneficiario final con un umbral de participación definido y documentar la cadena de propiedad y control. Obliga a que la aprobación de estas relaciones quede radicada en un nivel jerárquico superior.',
+    estado:'Vigente',
+    criticidad:'alta',
+    publicacion:'2026-05-05',
+    plazo:'2026-08-31',
+    plazoNota:'Adecuación de procedimientos internos y capacitación',
+    impacto:['PLAFT','Onboarding','Auditoría interna','Capacitación'],
+    accion:'Actualizar manual PLAFT, matriz de riesgo de clientes y programa anual de capacitación.',
+    responsable:'Oficial de Cumplimiento',
+    referencia:'Circulares vigentes publicadas por la UAF'
+  },
+  {
+    folio:'UAF-2026-020',
+    enlace:'https://www.uaf.cl/es-cl/normativa/circulares-uaf',
+    enlaceNombre:'Circulares vigentes UAF',
+    enlaceTipo:'listado',
+    emisor:'UAF',
+    instrumento:'Circular sobre reporte de operaciones sospechosas y reporte de operaciones en efectivo',
+    titulo:'Ajustes al deber de reportar operaciones sospechosas y en efectivo',
+    extracto:'Actualiza el contenido mínimo y el plazo del reporte de operaciones sospechosas, exigiendo describir el indicio y la trazabilidad del análisis que llevó a reportar o a descartar. Reitera el carácter continuo del deber: no hay monto mínimo ni exigencia de certeza sobre el delito base. Mantiene el reporte de operaciones en efectivo sobre el umbral vigente y refuerza la prohibición de advertir al cliente sobre la existencia del reporte.',
+    estado:'Vigente',
+    criticidad:'alta',
+    publicacion:'2026-04-22',
+    plazo:'2026-08-15',
+    plazoNota:'Ajuste de los flujos internos de detección y envío',
+    impacto:['PLAFT','Operaciones','Sistemas de monitoreo','Auditoría interna'],
+    accion:'Revisar reglas del sistema de monitoreo y los tiempos de análisis del comité de prevención.',
+    responsable:'Oficial de Cumplimiento / Tecnología',
+    referencia:'Circulares y formatos de reporte publicados por la UAF'
+  },
+  {
+    folio:'UAF-2026-019',
+    enlace:'https://www.uaf.cl/es-cl/normativa/circulares-uaf',
+    enlaceNombre:'Circulares vigentes UAF',
+    enlaceTipo:'listado',
+    emisor:'UAF',
+    instrumento:'Instrucciones sobre congelamiento de activos y listas de sanciones internacionales',
+    titulo:'Deber de congelamiento preventivo por resoluciones del Consejo de Seguridad de la ONU',
+    extracto:'Obliga a mantener revisión permanente de las listas de designados y a congelar sin demora, y sin aviso previo al titular, los fondos y activos vinculados. Exige informar el congelamiento a la Unidad dentro del plazo fijado y conservar la evidencia del cotejo, incluidos los falsos positivos descartados. Alcanza tanto a clientes como a contrapartes y beneficiarios de operaciones.',
+    estado:'Vigente',
+    criticidad:'alta',
+    publicacion:'2026-02-12',
+    plazo:'2026-08-29',
+    plazoNota:'Certificación interna del proceso de cotejo de listas',
+    impacto:['PLAFT','Operaciones internacionales','Tecnología','Fiscalía'],
+    accion:'Auditar la frecuencia de actualización de listas y probar el flujo de congelamiento de extremo a extremo.',
+    responsable:'Oficial de Cumplimiento',
+    referencia:'Instrucciones sobre congelamiento de activos publicadas por la UAF'
+  },
+  {
+    folio:'UAF-2026-018',
+    enlace:'https://www.uaf.cl/legislacion/norm_sector.aspx?id=2',
+    enlaceNombre:'Normativa UAF por sector',
+    enlaceTipo:'listado',
+    emisor:'UAF',
+    instrumento:'Guía sobre enfoque basado en riesgo y evaluación institucional LA/FT/FPADM',
+    titulo:'Metodología de matriz de riesgo y evaluación anual del riesgo institucional',
+    extracto:'Fija expectativas sobre la construcción de la matriz de riesgo por cliente, producto, canal y zona geográfica, y sobre su revisión periódica documentada. Exige que la calificación de riesgo determine efectivamente la intensidad de la debida diligencia y la frecuencia de actualización de antecedentes. Incorpora el financiamiento de la proliferación de armas de destrucción masiva como factor a evaluar de forma separada.',
+    estado:'Vigente',
+    criticidad:'media',
+    publicacion:'2026-01-30',
+    plazo:'2026-09-19',
+    plazoNota:'Evaluación anual del riesgo institucional',
+    impacto:['PLAFT','Gestión de riesgos','Auditoría interna'],
+    accion:'Reejecutar la evaluación institucional de riesgo y calibrar la matriz con datos del último ejercicio.',
+    responsable:'Oficial de Cumplimiento / Gerencia de Riesgos',
+    referencia:'Guías metodológicas publicadas por la UAF'
+  },
+  {
+    folio:'UAF-2026-017',
+    enlace:'https://www.uaf.cl/es-cl/sujetos-obligados/sector-privado/inscritos-en-la-uaf',
+    enlaceNombre:'Registro de entidades supervisadas UAF',
+    enlaceTipo:'listado',
+    emisor:'UAF',
+    instrumento:'Circular sobre registro de entidades reportantes y designación del oficial de cumplimiento',
+    titulo:'Actualización de datos en el registro y requisitos del oficial de cumplimiento',
+    extracto:'Obliga a mantener actualizados en el registro los datos de la entidad, del oficial de cumplimiento titular y de su suplente, informando cualquier cambio dentro del plazo fijado. Refuerza los requisitos de independencia, jerarquía y dedicación del cargo, y su reporte directo al directorio. La omisión en la actualización es en sí misma una infracción sancionable.',
+    estado:'Vigente',
+    criticidad:'media',
+    publicacion:'2025-12-04',
+    plazo:'2026-08-11',
+    plazoNota:'Confirmación anual de datos del registro',
+    impacto:['PLAFT','Gobierno corporativo','Recursos humanos'],
+    accion:'Confirmar datos registrados y dejar constancia en acta de la designación vigente.',
+    responsable:'Oficial de Cumplimiento / Fiscalía',
+    referencia:'Registro de entidades supervisadas de la UAF'
+  },
+  {
+    folio:'UAF-2026-016',
+    enlace:'https://www.uaf.cl/es-cl/normativa/circulares-uaf',
+    enlaceNombre:'Circulares vigentes UAF',
+    enlaceTipo:'listado',
+    emisor:'UAF',
+    instrumento:'Guía sectorial sobre activos virtuales y sus proveedores de servicios',
+    titulo:'Riesgos LA/FT en la relación con proveedores de servicios de activos virtuales',
+    extracto:'Aborda el tratamiento de clientes que operan con activos virtuales y de las cuentas de proveedores de estos servicios. Espera análisis del origen de fondos, entendimiento del modelo de negocio del proveedor y monitoreo diferenciado de flujos hacia y desde plataformas de intercambio. Advierte que la decisión de no operar con el sector debe ser fundada en riesgo evaluado y no aplicarse de forma automática.',
+    estado:'Vigente',
+    criticidad:'media',
+    publicacion:'2025-11-06',
+    plazo:null,
+    plazoNota:'Sin plazo de adecuación; criterio de supervisión permanente',
+    impacto:['PLAFT','Onboarding','Productos','Riesgo de crédito'],
+    accion:'Definir política escrita de apetito de riesgo para clientes del sector de activos virtuales.',
+    responsable:'Oficial de Cumplimiento / Gerencia Comercial',
+    referencia:'Guías sectoriales publicadas por la UAF'
+  },
+  {
+    folio:'UAF-2026-015',
+    enlace:'https://www.uaf.cl/legislacion/normativa_tramite.aspx',
+    enlaceNombre:'Normativa UAF en consulta',
+    enlaceTipo:'listado',
+    emisor:'UAF',
+    instrumento:'Circular en preparación sobre transferencias transfronterizas y jurisdicciones de alto riesgo',
+    titulo:'Información obligatoria del ordenante y beneficiario en transferencias internacionales',
+    extracto:'Prevé exigir que las transferencias transfronterizas viajen con información completa y verificada del ordenante y del beneficiario, y que la entidad receptora cuente con procedimientos para detectar mensajes incompletos y decidir si ejecuta, rechaza o suspende la operación. Contempla contramedidas reforzadas para jurisdicciones identificadas como de alto riesgo por los organismos internacionales.',
+    estado:'En tramitación',
+    criticidad:'alta',
+    publicacion:'2026-10-31',
+    publicacionEstimada:true,
+    plazo:null,
+    plazoNota:'Sin plazo hasta la publicación del texto definitivo',
+    impacto:['PLAFT','Operaciones internacionales','Corresponsalía','Tecnología'],
+    accion:'Levantar la brecha en los campos de los mensajes de pago y estimar el esfuerzo de desarrollo.',
+    responsable:'Oficial de Cumplimiento / Gerencia de Operaciones',
+    referencia:'Anuncios y consultas de la UAF; recomendaciones del organismo internacional de referencia'
+  },
+
+  {
+    folio:'REG-2026-008',
+    enlace:'https://www.bcn.cl/leychile',
+    enlaceNombre:'Ley Chile — BCN',
+    enlaceTipo:'listado',
+    emisor:'Congreso',
+    instrumento:'Ley 21.663, Marco de Ciberseguridad e Infraestructura Crítica de la Información',
+    titulo:'Deberes de reporte de incidentes de ciberseguridad para operadores de importancia vital',
+    extracto:'Impone a los operadores calificados como de importancia vital el deber de reportar incidentes de efecto significativo dentro de plazos breves y escalonados desde que se toma conocimiento. Exige adoptar un sistema de gestión de seguridad de la información, designar un encargado y mantener planes de continuidad. El incumplimiento habilita sanciones administrativas de cuantía relevante.',
+    estado:'Vigencia gradual',
+    criticidad:'alta',
+    publicacion:'2026-04-08',
+    plazo:'2026-11-30',
+    plazoNota:'Adecuación de protocolos de reporte al organismo competente',
+    impacto:['Ciberseguridad','Tecnología','Fiscalía','Directorio'],
+    accion:'Alinear el protocolo de gestión de incidentes con los plazos y canales de reporte exigidos.',
+    responsable:'CISO / Fiscalía',
+    referencia:'Texto de la ley y su reglamentación en el Diario Oficial'
+  },
+  {
+    folio:'REG-2026-007',
+    enlace:'https://www.bcn.cl/leychile',
+    enlaceNombre:'Ley Chile — BCN',
+    enlaceTipo:'listado',
+    emisor:'Hacienda',
+    instrumento:'Ley 21.595 sobre delitos económicos y ambientales — modelo de prevención',
+    titulo:'Exigencias reforzadas al modelo de prevención de delitos y responsabilidad de la persona jurídica',
+    extracto:'Amplía significativamente el catálogo de delitos que pueden generar responsabilidad penal de la persona jurídica y eleva el estándar del modelo de prevención, que ahora debe ser idóneo y estar efectivamente implementado, no solo formalmente adoptado. Exige identificación de actividades riesgosas, canales de denuncia con protección al denunciante y supervisión con autonomía y recursos suficientes.',
+    estado:'Vigente',
+    criticidad:'alta',
+    publicacion:'2026-02-20',
+    plazo:'2026-09-15',
+    plazoNota:'Revisión y certificación interna del modelo',
+    impacto:['Compliance penal','Gobierno corporativo','Auditoría interna'],
+    accion:'Rediseñar el modelo de prevención de delitos y documentar la supervisión del encargado.',
+    responsable:'Fiscalía / Encargado de Prevención de Delitos',
+    referencia:'Texto legal vigente y guías del regulador'
+  },
+  {
+    folio:'REG-2026-006',
+    enlace:'https://www.bcentral.cl/web/banco-central/areas/normativa',
+    enlaceNombre:'Normativa del Banco Central',
+    enlaceTipo:'listado',
+    emisor:'BCCh',
+    instrumento:'Compendio de Normas Financieras — sistemas de pago de bajo valor',
+    titulo:'Interoperabilidad y estándares operativos para medios de pago',
+    extracto:'Somete a consulta nuevos estándares de interoperabilidad para pagos de bajo valor, con exigencias de disponibilidad del servicio, tiempos máximos de acreditación y reglas de resolución de contracargos. Busca que distintos emisores y adquirentes operen bajo condiciones equivalentes de acceso. Incluye obligaciones de información periódica sobre incidentes y niveles de servicio.',
+    estado:'En consulta pública',
+    criticidad:'media',
+    publicacion:'2026-09-15',
+    publicacionEstimada:true,
+    plazo:'2026-08-14',
+    plazoNota:'Cierre de comentarios',
+    impacto:['Medios de pago','Tecnología','Operaciones'],
+    accion:'Evaluar impacto operativo y económico; coordinar postura con la asociación gremial.',
+    responsable:'Gerencia de Medios de Pago',
+    referencia:'Consultas normativas del Banco Central de Chile'
+  },
+  {
+    folio:'REG-2026-005',
+    enlace:'https://www.cmfchile.cl/institucional/legislacion_normativa/normativa.php',
+    enlaceNombre:'Buscador de normativa CMF',
+    enlaceTipo:'listado',
+    perimetro:'monitoreo',
+    emisor:'CMF',
+    instrumento:'Normativa de adecuación de capital — cronograma de convergencia a Basilea III',
+    titulo:'Requerimientos adicionales de capital y colchones de conservación',
+    extracto:'Continúa el cronograma de convergencia a los estándares de Basilea III, con incrementos anuales en los colchones exigidos y ajustes en la ponderación de activos por riesgo. Vincula el cumplimiento de los colchones a restricciones sobre reparto de dividendos y otras distribuciones. Exige incorporar los nuevos niveles en la proyección de capital y en las pruebas de tensión.',
+    estado:'Vigencia gradual',
+    criticidad:'media',
+    publicacion:'2026-01-15',
+    plazo:'2026-12-31',
+    plazoNota:'Cierre del tramo anual del cronograma',
+    impacto:['Capital','Planificación financiera','Reportes regulatorios'],
+    accion:'Actualizar proyección de capital y el informe de autoevaluación patrimonial.',
+    responsable:'Gerencia de Finanzas',
+    referencia:'Normativa de adecuación de capital de la CMF'
+  },
+  {
+    folio:'REG-2026-004',
+    enlace:'https://www.bcn.cl/leychile',
+    enlaceNombre:'Ley Chile — BCN',
+    enlaceTipo:'listado',
+    emisor:'SERNAC',
+    instrumento:'Ley 21.398 Pro Consumidor — deberes de información en productos financieros',
+    titulo:'Transparencia en costos, portabilidad y término de contratos financieros',
+    extracto:'Refuerza el deber de informar el costo total del producto de forma comparable y previa a la contratación, y de permitir el término del contrato por el mismo canal en que se celebró. Prohíbe condicionar la salida a trámites presenciales o a la contratación de productos adicionales. Los incumplimientos pueden dar lugar a procedimientos voluntarios colectivos y a multas.',
+    estado:'Vigente',
+    criticidad:'media',
+    publicacion:'2025-11-28',
+    plazo:'2026-08-08',
+    plazoNota:'Revisión anual de contratos y piezas informativas',
+    impacto:['Contratos de adhesión','Atención de clientes','Marketing'],
+    accion:'Auditar contratos de adhesión y cartelería, y revisar los flujos de término de producto.',
+    responsable:'Fiscalía / Servicio al Cliente',
+    referencia:'Normativa y circulares interpretativas del SERNAC'
+  },
+  {
+    folio:'REG-2026-003',
+    enlace:'https://www.cmfchile.cl/institucional/legislacion_normativa/normativa.php',
+    enlaceNombre:'Buscador de normativa CMF',
+    enlaceTipo:'listado',
+    emisor:'CMF',
+    instrumento:'Circular sobre publicidad y transparencia de productos financieros',
+    titulo:'Requisitos de veracidad y comparabilidad en la publicidad de productos',
+    extracto:'Exige que toda pieza publicitaria sea veraz, verificable y no induzca a error sobre costos, condiciones o restricciones del producto. Las limitaciones relevantes deben presentarse con legibilidad equivalente al mensaje principal, no en notas marginales. Requiere conservar respaldo de cada pieza difundida y de la validación interna previa a su publicación.',
+    estado:'Vigente',
+    criticidad:'baja',
+    publicacion:'2025-10-10',
+    plazo:'2026-09-05',
+    plazoNota:'Revisión periódica de piezas publicitarias en circulación',
+    impacto:['Marketing','Fiscalía','Cumplimiento'],
+    accion:'Aplicar la lista de verificación publicitaria a las campañas del trimestre.',
+    responsable:'Marketing / Cumplimiento',
+    referencia:'Circulares de la CMF sobre información al público'
+  },
+  {
+    folio:'REG-2026-002',
+    enlace:'https://www.cmfchile.cl/institucional/legislacion_normativa/normativa.php',
+    enlaceNombre:'Buscador de normativa CMF',
+    enlaceTipo:'listado',
+    emisor:'CMF',
+    instrumento:'Oficio Circular sobre externalización de servicios y riesgo de terceros',
+    titulo:'Gestión de proveedores críticos y servicios en la nube',
+    extracto:'Establece que la externalización no traslada la responsabilidad de la entidad frente al supervisor ni frente a sus clientes. Exige mantener un registro de proveedores críticos, evaluar su riesgo antes de la contratación e incorporar cláusulas de auditoría, acceso a información, ubicación de los datos y salida ordenada del servicio. Requiere planes de contingencia ante falla del proveedor.',
+    estado:'Vigente',
+    criticidad:'media',
+    publicacion:'2025-09-22',
+    plazo:'2026-07-20',
+    plazoNota:'Actualización del registro de proveedores críticos',
+    impacto:['Proveedores','Tecnología','Riesgo operacional'],
+    accion:'Completar el registro de proveedores críticos y las cláusulas contractuales exigidas.',
+    responsable:'Gerencia de Operaciones / Fiscalía',
+    referencia:'Oficios circulares publicados por la CMF'
+  },
+  {
+    folio:'REG-2026-001',
+    enlace:'https://tramitacion.senado.cl/appsenado/templates/tramitacion/index.php',
+    enlaceNombre:'Tramitación de proyectos — Congreso',
+    enlaceTipo:'listado',
+    emisor:'Congreso',
+    instrumento:'Proyecto de ley sobre protección de datos personales — agencia y régimen sancionatorio',
+    titulo:'Nuevo régimen de tratamiento de datos y su impacto en modelos de scoring',
+    extracto:'Crea una autoridad de control con potestad sancionatoria y establece principios, bases de licitud y derechos del titular sobre sus datos. Regula las decisiones automatizadas y el derecho a solicitar intervención humana, lo que alcanza directamente a los modelos de evaluación crediticia. Obliga a llevar registro de actividades de tratamiento y a notificar brechas de seguridad.',
+    estado:'En tramitación',
+    criticidad:'media',
+    publicacion:'2026-06-11',
+    plazo:null,
+    plazoNota:'Seguimiento legislativo, sin plazo de cumplimiento aún',
+    impacto:['Datos personales','Modelos de riesgo','Tecnología','Fiscalía'],
+    accion:'Mantener seguimiento del trámite y anticipar el inventario de tratamientos de datos.',
+    responsable:'Fiscalía / Oficial de Datos',
+    referencia:'Ficha de tramitación legislativa'
+  }
+];
+
+
+/* =========================================================================
+   SELLO DE SINCRONIZACIÓN
+   El script actualizar_panel.py reescribe la constante SINCRONIZACION en
+   cada corrida diaria. Si el panel deja de sincronizarse, la barra superior
+   cambia de color y lo advierte: un panel desactualizado en silencio es
+   peor que no tener panel.
+   ========================================================================= */
+const SINCRONIZACION = {
+  ultima: null,           // ISO 8601, ej. '2026-08-04T07:15:00-04:00'
+  fuentesOk: [],          // fuentes consultadas con éxito en la última corrida
+  fuentesFalla: [],       // fuentes que no respondieron
+  novedades: 0            // registros creados o modificados en la última corrida
+};
+
+function pintarSincronizacion(){
+  const barra = document.getElementById('barra-sync');
+  const etiqueta = document.getElementById('sync-etiqueta');
+  const texto = document.getElementById('sync-texto');
+  const sello = document.getElementById('sello-fecha');
+
+  if(!SINCRONIZACION.ultima){
+    barra.className = 'aviso';
+    etiqueta.textContent = 'Sin sincronizar';
+    texto.textContent = 'El panel muestra los datos cargados en el archivo. Presiona Sincronizar ahora para traer los movimientos del Congreso y revisar las fuentes de los reguladores.';
+    sello.textContent = 'sin sincronizar';
+    return;
+  }
+
+  const u = new Date(SINCRONIZACION.ultima);
+  const horas = Math.floor((Date.now() - u.getTime())/3600000);
+  sello.textContent = horas < 24 ? ('hace ' + horas + ' h') : ('hace ' + Math.floor(horas/24) + ' d');
+
+  const detalle = SINCRONIZACION.novedades + ' novedades · ' +
+    SINCRONIZACION.fuentesOk.length + ' fuentes consultadas' +
+    (SINCRONIZACION.fuentesFalla.length ? ' · sin respuesta: ' + SINCRONIZACION.fuentesFalla.join(', ') : '');
+
+  if(horas <= 36 && !SINCRONIZACION.fuentesFalla.length){
+    barra.className = 'aviso ok';
+    etiqueta.textContent = 'Al día';
+    texto.textContent = 'Última corrida ' + fechaLarga.format(u) + '. ' + detalle + '.';
+  } else if(horas <= 96){
+    barra.className = 'aviso atrasada';
+    etiqueta.textContent = 'Atrasada';
+    texto.textContent = 'La última corrida fue ' + fechaLarga.format(u) + '. ' + detalle + '. Revisa la tarea programada antes de usar el panel como base de decisiones.';
+  } else {
+    barra.className = 'aviso detenida';
+    etiqueta.textContent = 'Detenida';
+    texto.textContent = 'No hay sincronización desde ' + fechaLarga.format(u) + '. Los datos en pantalla no son confiables: verifica el proceso automático.';
+  }
+}
+
+
+/* =========================================================================
+   BOTÓN SINCRONIZAR AHORA
+   Un HTML abierto con doble clic (file://) no puede consultar sitios
+   externos: el navegador lo bloquea. Por eso el botón detecta cómo se abrió
+   el panel. Si corre sobre el servidor local, sincroniza de verdad. Si no,
+   explica en dos pasos cómo dejarlo operativo, en vez de fallar en silencio.
+   ========================================================================= */
+/* Dirección de la pestaña Actions del repositorio. La guía explica de dónde
+   sacarla. Sirve para el botón "Actualizar ahora" cuando el panel está
+   publicado en línea. Si se deja vacía, el botón igual funciona: solo omite
+   ese enlace. */
+const URL_ACTIONS = '';
+
+function modoApertura(){
+  if(location.protocol === 'file:') return 'archivo';
+  const h = location.hostname;
+  if(h === 'localhost' || h === '127.0.0.1') return 'local';
+  return 'publicado';
+}
+
+function cerrarCapa(){
+  const c = document.querySelector('.capa');
+  if(c) c.remove();
+}
+
+function abrirModal(titulo, bajada, cuerpo, botones){
+  cerrarCapa();
+  const capa = document.createElement('div');
+  capa.className = 'capa';
+  capa.addEventListener('click', e=>{ if(e.target === capa) cerrarCapa(); });
+  capa.innerHTML =
+    '<div class="modal" role="dialog" aria-modal="true" aria-label="'+titulo+'">' +
+      '<div class="modal-cab"><h3>'+titulo+'</h3><p>'+bajada+'</p></div>' +
+      '<div class="modal-cuerpo">'+cuerpo+'</div>' +
+      '<div class="modal-pie">'+botones+'</div>' +
+    '</div>';
+  document.body.appendChild(capa);
+  const cerrar = capa.querySelector('[data-cerrar]');
+  if(cerrar) cerrar.addEventListener('click', cerrarCapa);
+  document.addEventListener('keydown', function esc(e){
+    if(e.key === 'Escape'){ cerrarCapa(); document.removeEventListener('keydown', esc); }
+  });
+  return capa;
+}
+
+function explicarComoActivar(){
+  abrirModal(
+    'Falta encender el sincronizador',
+    'El panel está abierto como archivo, y en ese modo el navegador bloquea las consultas a los sitios de la UAF, la CMF, el Banco Central y el Congreso. Es una protección del navegador, no una falla del panel. Se resuelve en dos pasos, una sola vez.',
+    '<div class="paso"><div class="paso-num">1</div><div><b>Cierra esta pestaña</b>' +
+      '<span>Y vuelve a la carpeta donde están todos los archivos del panel.</span></div></div>' +
+    '<div class="paso"><div class="paso-num">2</div><div><b>Doble clic en el lanzador</b>' +
+      '<span><code>Iniciar panel.command</code> si usas Mac, o <code>Iniciar panel.bat</code> si usas Windows. ' +
+      'Se abre una ventana negra y el panel aparece solo en el navegador. Desde ahí, el botón Sincronizar funciona.</span></div></div>' +
+    '<div class="paso"><div class="paso-num">·</div><div><b>La ventana negra se queda abierta</b>' +
+      '<span>Es el sincronizador corriendo. Ciérrala cuando termines de usar el panel. No hay nada más que instalar ni configurar.</span></div></div>',
+    '<button class="boton" data-cerrar>Entendido</button>'
+  );
+}
+
+function explicarAutomatico(){
+  const u = SINCRONIZACION.ultima ? new Date(SINCRONIZACION.ultima) : null;
+  const cuando = u ? fechaLarga.format(u) : 'todavía sin registrar';
+  abrirModal(
+    'Este panel se actualiza solo',
+    'No hay nada que presionar. Cada mañana de día hábil el panel se sincroniza en línea y publica la versión nueva. Basta con abrir este enlace.',
+    '<div class="paso"><div class="paso-num">&#10003;</div><div><b>Última actualización: ' + cuando + '</b>' +
+      '<span>El estado también aparece en la barra superior: verde al día, ámbar atrasada, rojo detenida.</span></div></div>' +
+    '<div class="paso"><div class="paso-num">&#9733;</div><div><b>Guarda esta página en favoritos</b>' +
+      '<span>Es la única dirección que necesitas. Ábrela cuando quieras y verás los datos del día.</span></div></div>' +
+    (URL_ACTIONS
+      ? '<div class="paso"><div class="paso-num">&#8635;</div><div><b>¿Necesitas actualizar antes de mañana?</b>' +
+        '<span>Abre <a href="' + URL_ACTIONS + '" target="_blank" rel="noopener" style="color:var(--acento)">la página de sincronización</a>, ' +
+        'elige la tarea de la izquierda y presiona <em>Run workflow</em>. En un par de minutos, recarga esta página.</span></div></div>'
+      : ''),
+    '<button class="boton" data-cerrar>Entendido</button>'
+  );
+}
+
+async function sincronizarAhora(){
+  const modo = modoApertura();
+  if(modo === 'archivo'){ explicarComoActivar(); return; }
+  if(modo === 'publicado'){ explicarAutomatico(); return; }
+
+  const btn = document.getElementById('btn-sync');
+  btn.disabled = true;
+  btn.dataset.corriendo = '1';
+  const textoOriginal = btn.innerHTML;
+  btn.innerHTML = '<span class="giro">&#8635;</span> Sincronizando…';
+
+  const capa = abrirModal(
+    'Sincronizando',
+    'Consultando el Congreso Nacional y revisando las fuentes de la UAF, la CMF y el Banco Central. Puede tardar hasta un minuto.',
+    '<pre class="registro" id="registro-sync">Iniciando…</pre>',
+    ''
+  );
+
+  try{
+    const r = await fetch('/api/sincronizar', {method:'POST'});
+    const d = await r.json();
+    const reg = document.getElementById('registro-sync');
+    if(reg) reg.textContent = d.salida || 'Sin salida.';
+
+    const pie = capa.querySelector('.modal-pie');
+    const cab = capa.querySelector('.modal-cab');
+    if(d.ok){
+      cab.querySelector('h3').textContent = 'Sincronización completa';
+      cab.querySelector('p').textContent = 'El panel se actualizó. Al recargar verás los datos nuevos y el sello al día.';
+      pie.innerHTML = '<button class="boton" data-cerrar>Cerrar</button>' +
+                      '<button class="boton-sync" id="btn-recargar">Ver el panel actualizado</button>';
+      pie.querySelector('[data-cerrar]').addEventListener('click', cerrarCapa);
+      document.getElementById('btn-recargar').addEventListener('click', ()=>location.reload());
+    } else {
+      cab.querySelector('h3').textContent = 'La sincronización falló';
+      cab.querySelector('p').textContent = 'El panel quedó como estaba: no se escribió nada a medias. El detalle está abajo.';
+      pie.innerHTML = '<button class="boton" data-cerrar>Cerrar</button>';
+      pie.querySelector('[data-cerrar]').addEventListener('click', cerrarCapa);
+    }
+  } catch(e){
+    const reg = document.getElementById('registro-sync');
+    if(reg) reg.textContent = 'No se pudo contactar al sincronizador.\n\n' + e +
+      '\n\nRevisa que la ventana negra del lanzador siga abierta.';
+    const pie = capa.querySelector('.modal-pie');
+    pie.innerHTML = '<button class="boton" data-cerrar>Cerrar</button>';
+    pie.querySelector('[data-cerrar]').addEventListener('click', cerrarCapa);
+  } finally {
+    btn.disabled = false;
+    delete btn.dataset.corriendo;
+    btn.innerHTML = textoOriginal;
+  }
+}
+
+/* =========================================================================
+   SEGUIMIENTO LEGISLATIVO
+   ========================================================================= */
+const IMPACTO = {
+  alto:  {barra:'#A4211B', texto:'#A4211B', rotulo:'Alto'},
+  medio: {barra:'#9A6608', texto:'#9A6608', rotulo:'Medio'},
+  bajo:  {barra:'#2C6A55', texto:'#2C6A55', rotulo:'Bajo'}
+};
+const PESO_IMP = {alto:0, medio:1, bajo:2};
+const filtrosLegis = {impacto:new Set(), camara:new Set()};
+let abiertos = new Set();
+
+function filtrarProyectos(){
+  return PROYECTOS.filter(p=>{
+    if(filtrosLegis.impacto.size && !filtrosLegis.impacto.has(p.impacto)) return false;
+    if(filtrosLegis.camara.size && !filtrosLegis.camara.has(p.camara)) return false;
+    return true;
+  }).sort((a,b)=> PESO_IMP[a.impacto]-PESO_IMP[b.impacto] || (b.fecha||'').localeCompare(a.fecha||''));
+}
+
+function pintarProyectos(){
+  const cont = document.getElementById('legis-tabla');
+  const vista = filtrarProyectos();
+  cont.innerHTML = '';
+
+  if(!vista.length){
+    cont.innerHTML = '<div class="vacio">Ningún boletín coincide con los filtros aplicados.</div>';
+  }
+
+  vista.forEach(p=>{
+    const c = IMPACTO[p.impacto];
+    const abierta = abiertos.has(p.boletin);
+    const fila = document.createElement('div');
+    fila.className = 'legis-fila';
+    fila.dataset.abierta = abierta ? '1' : '0';
+
+    const urg = p.urgencia && p.urgencia !== 'Sin urgencia'
+      ? '<span class="insignia '+(p.urgencia==='Discusión inmediata'?'urg-di':'urg')+'">'+esc(p.urgencia)+'</span>'
+      : '<span class="insignia">Sin urgencia</span>';
+
+    const btn = document.createElement('button');
+    btn.className = 'legis-btn';
+    btn.setAttribute('aria-expanded', abierta ? 'true':'false');
+    btn.innerHTML =
+      '<span class="barra" style="background:'+c.barra+'"></span>' +
+      '<span class="boletin">'+esc(p.boletin)+'</span>' +
+      '<span>' +
+        '<span class="legis-titulo">'+esc(p.titulo)+'</span>' +
+        (p.extracto ? '<span class="fila-extracto">'+esc(p.extracto)+'</span>' : '') +
+        '<span class="legis-meta">' +
+          '<span>Impacto '+c.rotulo.toLowerCase()+'</span>' +
+          '<span>'+esc(p.camara)+'</span>' +
+          '<span>'+esc(p.estado)+'</span>' +
+          '<span>'+textoFecha(p.fecha)+'</span>' +
+          '<a class="fila-enlace" href="'+esc(p.enlace)+'" target="_blank" rel="noopener" onclick="event.stopPropagation()">Leer &#8599;</a>' +
+        '</span>' +
+      '</span>' +
+      urg;
+    btn.addEventListener('click', ()=>{
+      abiertos.has(p.boletin) ? abiertos.delete(p.boletin) : abiertos.add(p.boletin);
+      pintarProyectos();
+    });
+    fila.appendChild(btn);
+
+    if(abierta){
+      const det = document.createElement('div');
+      det.className = 'legis-detalle';
+      det.innerHTML = '<dl>' +
+        (p.extracto ? '<div class="campo"><dt>Extracto</dt><dd class="extracto">'+esc(p.extracto)+'</dd></div>' : '') +
+        campo('Por qué nos afecta', '<span class="extracto" style="display:block">'+esc(p.porQue)+'</span>') +
+        campo('Trámite actual', esc(p.tramite)) +
+        campo('Comisión', esc(p.comision)) +
+        campo('Último movimiento', textoFecha(p.fecha)) +
+        campo('Acción interna', esc(p.accion)) +
+        campo('Responsable', esc(p.responsable)) +
+        campo('Texto y tramitación', '<a class="enlace-boton" href="'+esc(p.enlace)+'" target="_blank" rel="noopener">Leer el proyecto <span class="flecha">&#8599;</span></a>' +
+          '<span class="enlace-nota">Ficha oficial del boletín '+esc(p.boletin)+' en el sitio del Congreso: texto presentado, informes de comisión, indicaciones y estado de tramitación.</span>') +
+      '</dl>';
+      fila.appendChild(det);
+    }
+    cont.appendChild(fila);
+  });
+
+  const altos = PROYECTOS.filter(p=>p.impacto==='alto').length;
+  const urgentes = PROYECTOS.filter(p=>p.urgencia && p.urgencia!=='Sin urgencia').length;
+  document.getElementById('legis-recuento').textContent =
+    vista.length + ' de ' + PROYECTOS.length + ' boletines · ' + altos + ' de impacto alto · ' + urgentes + ' con urgencia';
+}
+
+function chipsLegis(id, clave, valores){
+  const cont = document.getElementById(id);
+  cont.innerHTML = '';
+  valores.forEach(v=>{
+    const b = document.createElement('button');
+    b.className = 'chip';
+    b.textContent = clave === 'impacto' ? IMPACTO[v].rotulo : v;
+    b.setAttribute('aria-pressed', filtrosLegis[clave].has(v) ? 'true':'false');
+    b.addEventListener('click', ()=>{
+      filtrosLegis[clave].has(v) ? filtrosLegis[clave].delete(v) : filtrosLegis[clave].add(v);
+      b.setAttribute('aria-pressed', filtrosLegis[clave].has(v) ? 'true':'false');
+      pintarProyectos();
+    });
+    cont.appendChild(b);
+  });
+}
+
+function iniciarLegislativo(){
+  chipsLegis('chips-impacto','impacto',['alto','medio','bajo']);
+  chipsLegis('chips-camara','camara',[...new Set(PROYECTOS.map(p=>p.camara))]);
+  document.getElementById('btn-legis-csv').addEventListener('click', ()=>{
+    const cab = ['Boletín','Título','Extracto','Cámara','Estado','Trámite','Comisión','Urgencia','Último movimiento','Impacto','Por qué nos afecta','Acción interna','Responsable','Enlace'];
+    const q = s => '"' + String(s==null?'':s).replace(/"/g,'""') + '"';
+    const filas = filtrarProyectos().map(p=>[
+      p.boletin,p.titulo,p.extracto||'',p.camara,p.estado,p.tramite,p.comision,p.urgencia,p.fecha,
+      IMPACTO[p.impacto].rotulo,p.porQue,p.accion,p.responsable,p.enlace
+    ].map(q).join(';'));
+    const blob = new Blob(['\uFEFF' + [cab.map(q).join(';')].concat(filas).join('\r\n')], {type:'text/csv;charset=utf-8;'});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url; a.download = 'proyectos-de-ley-' + HOY.toISOString().slice(0,10) + '.csv';
+    a.click(); URL.revokeObjectURL(url);
+  });
+  const bs = document.getElementById('btn-sync');
+  bs.addEventListener('click', sincronizarAhora);
+  if(modoApertura() === 'publicado'){
+    bs.innerHTML = '<span class="giro">&#8635;</span> Actualización automática';
+    bs.title = 'Este panel se sincroniza solo cada mañana';
+  }
+  pintarProyectos();
+  pintarSincronizacion();
+}
+
+/* =========================================================================
+   BLOQUE PROYECTOS — seguimiento legislativo
+   Los números de boletín y los títulos provienen del listado público de
+   tramitación del Congreso. La cámara de origen, el trámite, la comisión y
+   la urgencia los completa actualizar_panel.py desde los servicios de datos
+   abiertos; mientras no corra, quedan como "Por confirmar".
+   El campo extracto resume el objetivo declarado del proyecto según su título
+   y su idea matriz; no reemplaza la lectura del texto presentado, accesible
+   con el botón "Leer el proyecto" de cada ficha.
+   Los campos porQue, accion y responsable son criterio interno: no se
+   actualizan automáticamente y deben mantenerse a mano.
+   ========================================================================= */
+const PROYECTOS = [
+  {
+    boletin:'18441-03',
+    extracto:'Propone incorporar criterios de accesibilidad e inclusión financiera a los mecanismos de autenticación que usan las entidades para validar al usuario en transacciones electrónicas, de modo que los sistemas de verificación no excluyan a personas mayores, con discapacidad o sin acceso a tecnología avanzada. Se inserta en la ley 20.009, que regula el desconocimiento de operaciones y la responsabilidad por fraude en medios de pago.',
+    titulo:'Modifica la ley N° 20.009 para aplicar criterios de accesibilidad e inclusión financiera en los procedimientos de autenticación de usuarios en transacciones electrónicas',
+    camara:'Por confirmar', estado:'En tramitación', tramite:'Primer trámite constitucional',
+    comision:'Por confirmar', urgencia:'Sin urgencia', fecha:'2026-07-07', impacto:'alto',
+    porQue:'La ley 20.009 rige el desconocimiento de operaciones y la responsabilidad por fraude en medios de pago electrónicos. Cualquier cambio en los estándares de autenticación afecta directamente el flujo de onboarding y de envío de remesas, y puede desplazar la carga de la prueba en operaciones desconocidas por el cliente.',
+    accion:'Modelar el efecto sobre las tasas de fricción en autenticación y sobre la exposición por fraude; preparar minuta técnica.',
+    responsable:'Fiscalía / Producto',
+    enlace:'https://tramitacion.senado.cl/appsenado/templates/tramitacion/index.php?boletin_ini=18441-03'
+  },
+  {
+    boletin:'18407-25',
+    extracto:'Propone aumentar las penas y sanciones asociadas al lavado de activos mediante modificaciones a varios cuerpos legales, entre ellos la ley 19.913. Apunta a endurecer la respuesta penal frente a la circulación de fondos de origen ilícito y, en esa línea, refuerza las consecuencias del incumplimiento de los deberes de prevención que pesan sobre los sujetos obligados.',
+    titulo:'Modifica diversos cuerpos legales con el objeto de agravar las sanciones aplicables en materia de lavado de activos',
+    camara:'Por confirmar', estado:'En tramitación', tramite:'Primer trámite constitucional',
+    comision:'Por confirmar', urgencia:'Sin urgencia', fecha:'2026-06-24', impacto:'alto',
+    porQue:'Endurece el régimen sancionatorio de lavado de activos, marco central de la operación como sujeto obligado ante la UAF. Un alza de penas y sanciones eleva la exposición del oficial de cumplimiento y de la administración, y refuerza la exigencia de acreditar diligencia efectiva y no meramente documental.',
+    accion:'Seguir la discusión en particular y evaluar impacto en el modelo de prevención de delitos y en las pólizas D&O.',
+    responsable:'Oficial de Cumplimiento / Fiscalía',
+    enlace:'https://tramitacion.senado.cl/appsenado/templates/tramitacion/index.php?boletin_ini=18407-25'
+  },
+  {
+    boletin:'18118-07',
+    extracto:'Propone modificar la ley 21.719 de protección de datos personales para regular la identidad digital y las representaciones sintéticas, es decir, contenidos generados artificialmente que reproducen rasgos, voz o imagen de una persona real. Busca dar respuesta a la suplantación mediante estas técnicas y fijar reglas sobre el tratamiento de los datos que las hacen posibles.',
+    titulo:'Modifica la ley N° 21.719, sobre protección y tratamiento de datos personales, en materia de identidad digital y representación sintética',
+    camara:'Por confirmar', estado:'En tramitación', tramite:'Primer trámite constitucional',
+    comision:'Por confirmar', urgencia:'Sin urgencia', fecha:'2026-03-10', impacto:'alto',
+    porQue:'Toca la verificación de identidad, base de todo onboarding remoto. Si se regulan la identidad digital y las representaciones sintéticas, cambian los requisitos de los procesos de KYC con prueba de vida y el tratamiento de datos biométricos, junto con el régimen de responsabilidad ante suplantación.',
+    accion:'Revisar el proveedor de verificación de identidad y las cláusulas de tratamiento de datos biométricos.',
+    responsable:'Fiscalía / Oficial de Datos',
+    enlace:'https://tramitacion.senado.cl/appsenado/templates/tramitacion/index.php?boletin_ini=18118-07'
+  },
+  {
+    boletin:'18060-07',
+    extracto:'Propone corregir y precisar la ley 21.719 antes de su plena entrada en vigencia, ajustando definiciones, bases de licitud, el régimen de la Agencia de Protección de Datos Personales y las reglas de transferencia internacional de datos. Es un proyecto de afinamiento técnico sobre un marco ya aprobado, no una nueva regulación.',
+    titulo:'Perfecciona la ley N° 21.719, que regula la protección y el tratamiento de los datos personales y crea la Agencia de Protección de Datos Personales',
+    camara:'Por confirmar', estado:'En tramitación', tramite:'Primer trámite constitucional',
+    comision:'Por confirmar', urgencia:'Sin urgencia', fecha:'2026-01-14', impacto:'alto',
+    porQue:'Ajusta el régimen que ya obliga a la entidad: bases de licitud, derechos del titular, transferencias internacionales de datos y notificación de brechas. Para una operación transfronteriza, las reglas de transferencia internacional son el punto crítico, porque condicionan la arquitectura de datos entre Chile y las entidades del grupo en el exterior.',
+    accion:'Mantener el inventario de tratamientos alineado a la versión en discusión y anticipar el mecanismo de transferencia internacional.',
+    responsable:'Fiscalía / Oficial de Datos',
+    enlace:'https://tramitacion.senado.cl/appsenado/templates/tramitacion/index.php?boletin_ini=18060-07'
+  },
+  {
+    boletin:'15975-25',
+    extracto:'Propone crear un Subsistema de Inteligencia Económica dentro del sistema de inteligencia del Estado, orientado a detectar y alertar tempranamente actividades vinculadas al crimen organizado, con foco en sus flujos financieros. Contempla mecanismos de coordinación e intercambio de información entre organismos públicos.',
+    titulo:'Crea el Subsistema de Inteligencia Económica y establece medidas para la prevención y alerta de actividades relacionadas con el crimen organizado',
+    camara:'Por confirmar', estado:'En tramitación', tramite:'Por confirmar',
+    comision:'Por confirmar', urgencia:'Sin urgencia', fecha:'2023-05-31', impacto:'medio',
+    porQue:'Crea una institucionalidad de inteligencia financiera que puede traducirse en nuevos requerimientos de información a las entidades reportantes, con plazos y formatos propios distintos de los de la UAF. Conviene anticipar el costo operativo de un segundo canal de reportería.',
+    accion:'Monitoreo pasivo; activar análisis si avanza a segundo trámite.',
+    responsable:'Oficial de Cumplimiento',
+    enlace:'https://tramitacion.senado.cl/appsenado/templates/tramitacion/index.php?boletin_ini=15975-25'
+  },
+  {
+    boletin:'18488-07',
+    extracto:'Propone modificar diversos cuerpos legales para reforzar la persecución penal y patrimonial del crimen organizado y tipificar nuevos delitos. La dimensión patrimonial es la relevante aquí: apunta a rastrear, incautar y decomisar los activos de las organizaciones criminales, lo que se apoya en la información que mantienen las entidades financieras.',
+    titulo:'Modifica diversos cuerpos legales en materia de persecución penal y patrimonial, y tipifica nuevos delitos para combatir el crimen organizado',
+    camara:'Por confirmar', estado:'En tramitación', tramite:'Primer trámite constitucional',
+    comision:'Por confirmar', urgencia:'Sin urgencia', fecha:'2026-07-21', impacto:'medio',
+    porQue:'La persecución patrimonial suele venir acompañada de deberes de información y de medidas cautelares sobre fondos en poder de terceros. Para una remesadora, importa el procedimiento aplicable a la retención de operaciones en curso y los plazos para responder requerimientos.',
+    accion:'Revisar el protocolo de respuesta a requerimientos judiciales y de retención de fondos.',
+    responsable:'Fiscalía',
+    enlace:'https://tramitacion.senado.cl/appsenado/templates/tramitacion/index.php?boletin_ini=18488-07'
+  },
+  {
+    boletin:'18370-25',
+    extracto:'Propone actualizar la ley 21.459 sobre delitos informáticos, dictada para adecuar Chile al Convenio de Budapest. Busca ajustar los tipos penales a técnicas de ataque aparecidas después de su entrada en vigencia y precisar las reglas de investigación aplicables a estos delitos.',
+    titulo:'Modifica la ley N° 21.459, con el objeto de actualizar la regulación en materia de delitos informáticos',
+    camara:'Por confirmar', estado:'En tramitación', tramite:'Primer trámite constitucional',
+    comision:'Por confirmar', urgencia:'Sin urgencia', fecha:'2026-06-16', impacto:'medio',
+    porQue:'Actualiza los tipos penales informáticos sobre los que se construyen los protocolos internos de respuesta a incidentes y de denuncia. Incide en cómo se documenta y persigue el fraude por acceso indebido a cuentas de clientes.',
+    accion:'Contrastar el protocolo de incidentes y de querellas con los tipos propuestos.',
+    responsable:'Fiscalía / Seguridad de la Información',
+    enlace:'https://tramitacion.senado.cl/appsenado/templates/tramitacion/index.php?boletin_ini=18370-25'
+  },
+  {
+    boletin:'18117-19',
+    extracto:'Propone regular la recopilación y extracción de las salidas producidas por sistemas algorítmicos, esto es, los resultados que genera un modelo automatizado. Apunta a establecer condiciones bajo las cuales esas salidas pueden ser recolectadas, conservadas o reutilizadas por terceros.',
+    titulo:'Modifica diversos cuerpos legales con el objeto de regular la recopilación y extracción de salidas generadas por sistemas algorítmicos',
+    camara:'Por confirmar', estado:'En tramitación', tramite:'Primer trámite constitucional',
+    comision:'Por confirmar', urgencia:'Sin urgencia', fecha:'2026-03-10', impacto:'bajo',
+    porQue:'Puede alcanzar a los modelos automatizados de scoring de riesgo y de monitoreo transaccional si se imponen deberes de explicabilidad o de conservación de las salidas del sistema. Relevante en el mediano plazo para la trazabilidad del motor de alertas.',
+    accion:'Monitoreo pasivo; documentar desde ya la trazabilidad del motor de reglas.',
+    responsable:'Tecnología / Cumplimiento',
+    enlace:'https://tramitacion.senado.cl/appsenado/templates/tramitacion/index.php?boletin_ini=18117-19'
+  },
+  {
+    boletin:'18080-03',
+    extracto:'Propone reforzar la transparencia y la trazabilidad financiera de las operaciones prendarias, un canal históricamente usado para movilizar fondos con baja trazabilidad. Introduce exigencias de registro e información sobre las partes y los montos involucrados.',
+    titulo:'Modifica diversos cuerpos legales con el objeto de fortalecer la transparencia y trazabilidad financiera en las operaciones prendarias',
+    camara:'Por confirmar', estado:'En tramitación', tramite:'Primer trámite constitucional',
+    comision:'Por confirmar', urgencia:'Sin urgencia', fecha:'2026-01-26', impacto:'bajo',
+    porQue:'No alcanza la operación directamente, pero fija criterios de trazabilidad financiera que suelen extenderse por analogía a otros sujetos obligados en discusiones posteriores. Se mantiene en observación por precedente.',
+    accion:'Monitoreo pasivo.',
+    responsable:'Oficial de Cumplimiento',
+    enlace:'https://tramitacion.senado.cl/appsenado/templates/tramitacion/index.php?boletin_ini=18080-03'
+  },
+  {
+    boletin:'18105-05',
+    extracto:'Propone modificar la ley 20.848, marco de la inversión extranjera directa, para incorporar una apreciación estratégica de las inversiones que ingresan al país. Abre la posibilidad de revisar operaciones según su impacto en sectores considerados sensibles, lo que puede alcanzar cambios de control societario.',
+    titulo:'Modifica la ley N° 20.848, en materia de apreciación estratégica de las inversiones extranjeras',
+    camara:'Por confirmar', estado:'En tramitación', tramite:'Primer trámite constitucional',
+    comision:'Por confirmar', urgencia:'Sin urgencia', fecha:'2026-03-03', impacto:'bajo',
+    porQue:'Interesa por la estructura de propiedad extranjera de la entidad: un régimen de revisión de inversiones puede agregar trámites ante cambios de control, aportes de capital o reestructuraciones societarias del grupo.',
+    accion:'Monitoreo pasivo; informar a la matriz si avanza a discusión en particular.',
+    responsable:'Fiscalía',
+    enlace:'https://tramitacion.senado.cl/appsenado/templates/tramitacion/index.php?boletin_ini=18105-05'
+  }
+];
+
+iniciar();
+iniciarLegislativo();
+</script>
+</body>
+</html>

@@ -1,0 +1,41 @@
+name: Actualizar panel regulatorio
+
+# Se ejecuta sola de lunes a viernes a las 11:15 UTC (07:15 en Chile, 08:15
+# en horario de verano). También puede lanzarse a mano desde la pestaña
+# Actions con el botón "Run workflow".
+on:
+  schedule:
+    - cron: "15 11 * * 1-5"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  actualizar:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Descargar los archivos
+        uses: actions/checkout@v4
+
+      - name: Preparar Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Sincronizar con las fuentes oficiales
+        run: python actualizar_panel.py --panel panel-alerta-regulatoria.html
+
+      - name: Publicar la versión del día
+        run: |
+          rm -f *.bak.html
+          cp panel-alerta-regulatoria.html index.html
+          git config user.name  "actualizacion-regulatoria"
+          git config user.email "actions@github.com"
+          git add index.html panel-alerta-regulatoria.html estado_sync.json bitacora_sync.md
+          if git diff --staged --quiet; then
+            echo "Sin cambios que publicar hoy."
+          else
+            git commit -m "Actualización $(date -u +%Y-%m-%d)"
+            git push
+          fi
